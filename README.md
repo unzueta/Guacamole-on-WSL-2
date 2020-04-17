@@ -21,7 +21,7 @@ Install Gnome and select gdm3
 
 ## Install Tiger Vnc
 
-`apt-get install tigervnc-standalone-server tigervnc-xorg-extension tigervnc-viewer`
+`apt-get install tigervnc-standalone-server tigervnc-xorg-extension tigervnc-viewer tigervnc-scraping-server`
 
 ## Setup Vnc password
 
