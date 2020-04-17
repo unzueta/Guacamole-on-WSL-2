@@ -9,13 +9,48 @@ Setup Guacamole on WSL 2
 
 `sudo apt ugrade`
 
-## Install Mate Desktop
+## Install the Gnome Desktop
 
 `apt-get remove blueman`
 
-`apt install ubuntu-mate-desktop`
+`dpkg-reconfigure dbus && service dbus restart`
 
- Define MATE as your default desktop for all users
+Install Gnome and select gdm3
 
-`bash -c 'echo PREFERRED=/usr/bin/mate-session > /etc/sysconfig/desktop'`
+`apt install ubuntu-gnome-desktop`
+
+## Install Tiger Vnc
+
+`apt-get install tigervnc-standalone-server tigervnc-xorg-extension tigervnc-viewer`
+
+## Setup Vnc password
+
+Exit root 
+
+`exit`
+
+`vncpassword`
+
+Rename the existing .Xauthority file (if exists) by running the following command
+
+mv .Xauthority old.Xauthority 
+
+xauth with complain unless ~/.Xauthority exists
+
+touch ~/.Xauthority
+
+Create a file name ~/.vnc/xstartup
+
+`nano ~/.vnc/xstartup`
+
+Paste the following lines
+
+```
+#!/bin/sh
+# Start Gnome 3 Desktop 
+[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
+[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
+vncconfig -iconic &
+dbus-launch --exit-with-session gnome-session &
+```
 
