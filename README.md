@@ -1,6 +1,10 @@
 # Guacamole-on-WSL-2
 Setup Guacamole on WSL 2
 
+#Update the WSL 2 Linux kernel (optional)
+
+https://docs.microsoft.com/en-us/windows/wsl/wsl2-kernel
+
 ## Update Ubuntu
 
 `sudo su`
