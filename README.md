@@ -7,6 +7,10 @@ https://docs.microsoft.com/en-us/windows/wsl/wsl2-kernel
 
 Install Ubuntu
 
+Convert to WSL 2
+
+`wsl --set-version Ubuntu 2`
+
 ## Update Ubuntu
 
 `sudo su`
@@ -19,9 +23,9 @@ Install Ubuntu
 
 apt-get install vnc4server
 
-## Install xfce
+## Install xfce4
 
-apt-get install xfce
+apt-get install xfce4
 
 ## Setup Vnc password
 
@@ -35,13 +39,9 @@ Configure the Vnc startup script
 
 `cd`
 
-`mkdir .vnc`
-
-`touch ~/.vnc/xtartup`
-
 `nano ~/.vnc/xtartup`
 
-`Paste the following lines:`
+Paste the following lines:
 
 ```
 #!/bin/sh
@@ -51,15 +51,15 @@ startxfce4 &
 ```
 ## Install Apache2
 
-`sudo apt-get install apache2
+`sudo apt-get install apache2`
 
-sudo aptitude install -y libapache2-mod-proxy-html libxml2-dev `
+`sudo apt-get install libxml2-dev`
 
 ## Install Guacamole
 
 `sudo add-apt-repository ppa:guacamole/stable`
 
-`apt-get install guacamole-tomcat`
+`sudo apt-get install guacamole-tomcat`
 
 # Configure Apache
 
