@@ -61,24 +61,15 @@ startxfce4 &
 
 `sudo apt-get install guacamole-tomcat`
 
-# Configure Apache
+## Download Guacamole client
+`wget https://downloads.apache.org/guacamole/1.1.0/binary/guacamole-1.1.0.war`
 
-`sudo a2enmod`
+`sudo mv guacamole-1.1.0.war /var/lib/tomcat8/webapps/guacamole.war`
 
-`proxy proxy_ajp proxy_http rewrite deflate headers proxy_balancer proxy_connect proxy_html`
-
-`sudo nano /etc/apache2/sites-available/000-default.conf`
-
-Paste the following lines:
-
-```
-<VirtualHost *:80>
-# /guacamole settings
-ProxyPass /guacamole http://localhost:8080/guacamole
-ProxyPassReverse /guacamole http://localhost:8080/guacamole
-<Location /guacamole>
-    Order allow,deny
-    Allow from all
-</Location>
-</VirtualHost> 
-```
+ ## Configure Guacamole
+ 
+ `sudo mkdir /usr/share/tomcat8/.guacamole`
+ 
+ `ln -s /etc/guacamole/guacamole.properties /usr/share/tomcat8/.guacamole/` 
+   
+ 
