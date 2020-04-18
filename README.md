@@ -5,13 +5,13 @@ Update the WSL 2 Linux kernel (optional)
 
 https://docs.microsoft.com/en-us/windows/wsl/wsl2-kernel
 
-Install Ubuntu
+Install Debian
 
 Convert to WSL 2
 
 `wsl --set-version Ubuntu 2`
 
-## Update Ubuntu
+## Update Debian
 
 `sudo su`
 
@@ -21,11 +21,11 @@ Convert to WSL 2
 
 ## Install Vnc Server
 
-apt-get install vnc4server
+apt install vnc4server
 
-## Install xfce4
+## Install Mate Desktop
 
-apt-get install xfce4
+apt install task-mate-desktop
 
 ## Setup Vnc password
 
