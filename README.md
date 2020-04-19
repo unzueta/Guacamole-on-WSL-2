@@ -1,17 +1,25 @@
 # Guacamole-on-WSL-2
 Setup Guacamole on WSL 2
 
-Update the WSL 2 Linux kernel (optional)
+Update the WSL 2 Linux kernel
 
 https://docs.microsoft.com/en-us/windows/wsl/wsl2-kernel
 
-Install Debian
+Install Ubuntu
 
 Convert to WSL 2
 
 `wsl --set-version Ubuntu 2`
 
-## Update Debian
+wsl --set-default-version 2
+
+Set default Distribution to Ubuntu
+
+`wsl --set-default Ubuntu`
+
+Install Docker Desktop
+
+## Update Ubuntu
 
 `sudo su`
 
@@ -19,11 +27,11 @@ Convert to WSL 2
 
 `sudo apt ugrade`
 
-## Install Vnc Server
+## Run Guacamole container
 
-apt install vnc4server
+`docker run --name some-guacd -e ACCEPT_EULA=Y -d glyptodon/guacd`
 
-## Install Mate Desktop
+`docker run --name some-guacamole -e ACCEPT_EULA=Y -e GUACD_HOSTNAME=some-guacd -e USER_MAPPING='cat user-mapping.xml' -p 8080:8080 -d glyptodon/guacamole`
 
 apt install task-mate-desktop
 
