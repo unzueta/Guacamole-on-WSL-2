@@ -5,13 +5,11 @@ Update the WSL 2 Linux kernel
 
 https://docs.microsoft.com/en-us/windows/wsl/wsl2-kernel
 
+Set default to WSL 2
+
+`wsl --set-default-version 2`
+
 Install Ubuntu
-
-Convert to WSL 2
-
-`wsl --set-version Ubuntu 2`
-
-wsl --set-default-version 2
 
 Set default Distribution to Ubuntu
 
@@ -27,57 +25,47 @@ Install Docker Desktop
 
 `sudo apt ugrade`
 
-## Run Guacamole container
+## Create docker-compose.yml
 
-`docker run --name some-guacd -e ACCEPT_EULA=Y -d glyptodon/guacd`
-
-`docker run --name some-guacamole -e ACCEPT_EULA=Y -e GUACD_HOSTNAME=some-guacd -e USER_MAPPING='cat user-mapping.xml' -p 8080:8080 -d glyptodon/guacamole`
-
-apt install task-mate-desktop
-
-## Setup Vnc password
-
-Exit root 
-
-`exit`
-
-`vncpasswd`
-
-Configure the Vnc startup script
-
-`cd`
-
-`nano ~/.vnc/xtartup`
-
-Paste the following lines:
+`nano docker-compose.yml`
 
 ```
-#!/bin/sh
-xrdb $HOME/.Xresources
-xsetroot -solid grey
-startxfce4 &
+version: "3"
+services:
+
+    guacd:
+        image: glyptodon/guacd
+        environment:
+            ACCEPT_EULA: Y
+
+    guacamole:
+        image: glyptodon/guacamole
+        ports:
+            - "8080:8080"
+            - "5901:5901"
+            - "3389:3389"
+        environment:
+            ACCEPT_EULA: Y
+            GUACD_HOSTNAME: guacd
+            USER_MAPPING: |
+                <user-mapping>
+                    <authorize username="user" password="userPassword">
+                        <connection name="UbuntuRDP">
+                          <protocol>rdp</protocol>
+                          <param name="hostname">172.18.25.37</param>
+                          <param name="port">3389</param>
+                          <param name="console">true</param>
+                        </connection> 
+                        <connection name="VNC 2">
+                            <protocol>vnc</protocol>
+                            <param name="hostname">172.18.2.7</param>
+                            <param name="port">5901</param>
+                            <param name="password">vncPassword</param>
+                        </connection>
+                    </authorize>
+                </user-mapping>
 ```
-## Install Apache2
+Run docker-compose
 
-`sudo apt-get install apache2`
-
-`sudo apt-get install libxml2-dev`
-
-## Install Guacamole
-
-`sudo add-apt-repository ppa:guacamole/stable`
-
-`sudo apt-get install guacamole-tomcat`
-
-## Download Guacamole client
-`wget https://downloads.apache.org/guacamole/1.1.0/binary/guacamole-1.1.0.war`
-
-`sudo mv guacamole-1.1.0.war /var/lib/tomcat8/webapps/guacamole.war`
-
- ## Configure Guacamole
- 
- `sudo mkdir /usr/share/tomcat8/.guacamole`
- 
- `ln -s /etc/guacamole/guacamole.properties /usr/share/tomcat8/.guacamole/` 
-   
+`docker-compose up`
  
