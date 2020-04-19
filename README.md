@@ -25,6 +25,8 @@ Install Docker Desktop
 
 `sudo apt ugrade`
 
+## Create firewall rule to allow WSL ip port 8080 on public profile network 
+
 ## Create docker-compose.yml
 
 `nano docker-compose.yml`
