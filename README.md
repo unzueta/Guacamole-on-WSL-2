@@ -77,8 +77,6 @@ Run docker-compose
 
 `sudo /etc/init.d/dbus start`
 
-`sudo /etc/init.d/avahi-daemon start`
-
 `sudo nano /etc/avahi/avahi-daemon.conf`
 
 ```
@@ -87,3 +85,7 @@ host-name=WSL
 ```
 
 `sudo systemctl enable avahi-daemon`
+
+To manually start:
+
+`sudo /etc/init.d/avahi-daemon start`
