@@ -85,3 +85,5 @@ Run docker-compose
 [server]
 host-name=WSL
 ```
+
+`sudo systemctl enable avahi-daemon`
