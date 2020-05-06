@@ -71,17 +71,17 @@ Run docker-compose
 
 `docker-compose up`
 
-#To set the hostname of your WSL machine to WSL
+# Set the hostname of your WSL machine to WSL
 
-`sudo apt-get install -y avahi-daemon
-sudo /etc/init.d/dbus start
-sudo /etc/init.d/avahi-daemon start`
+`sudo apt-get install -y avahi-daemon`
 
-`sudo nano /etc/avahi/avahi-daemon.conf for example`
+`sudo /etc/init.d/dbus start`
+
+`sudo /etc/init.d/avahi-daemon start`
+
+`sudo nano /etc/avahi/avahi-daemon.conf`
 
 ```
 [server]
 host-name=WSL
 ```
-
- 
