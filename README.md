@@ -71,7 +71,7 @@ Run docker-compose
 
 `docker-compose up`
 
-# Set the hostname of your WSL machine to WSL
+# Set the hostname of your WSL machine to WSL.local
 
 `sudo apt-get install -y avahi-daemon`
 
