@@ -88,7 +88,7 @@ host-name=WSL
 
 `sudo /etc/init.d/avahi-daemon start`
 
-## To run on startup:
+## To run on startup (Do not use if your are running Docker Desktop):
 
 `sudo apt install policykit-1 daemonize`
 
