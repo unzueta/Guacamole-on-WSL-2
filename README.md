@@ -156,9 +156,9 @@ root:x:0:0:root:/root:/usr/bin/bash
 
 `sudo chmod +x /etc/rc.local`
 
-`sudo editor /etc/rc.local`
+`sudo nano /etc/rc.local`
 
-copy the folloing lines:
+Copy the following lines:
 
 ```
 #!/bin/sh -e
@@ -167,7 +167,6 @@ copy the folloing lines:
 
 exit 0
 ```
-
 
 In a elevated command prompt in Windows:
 
