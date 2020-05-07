@@ -82,8 +82,99 @@ Run docker-compose
 host-name=WSL
 ```
 
-To manually start:
+## To manually start:
 
 `sudo /etc/init.d/dbus start`
 
 `sudo /etc/init.d/avahi-daemon start`
+
+## To run on startup:
+
+`sudo apt install policykit-1 daemonize`
+
+`sudo touch /usr/bin/bash`
+
+`sudo chmod +x /usr/bin/bash`
+
+`sudo nano /usr/bin/bash`
+
+Add the following lines. Replace WSL_USER with your user:
+
+```
+#!/bin/bash
+# your WSL2 username
+UNAME="<WSL_USER>"
+
+UUID=$(id -u "${UNAME}")
+UGID=$(id -g "${UNAME}")
+UHOME=$(getent passwd "${UNAME}" | cut -d: -f6)
+USHELL=$(getent passwd "${UNAME}" | cut -d: -f7)
+
+if [[ -p /dev/stdin || "${BASH_ARGC}" > 0 && "${BASH_ARGV[1]}" != "-c" ]]; then
+    USHELL=/bin/bash
+fi
+
+if [[ "${PWD}" = "/root" ]]; then
+    cd "${UHOME}"
+fi
+
+# get pid of systemd
+SYSTEMD_PID=$(pgrep -xo systemd)
+
+# if we're already in the systemd environment
+if [[ "${SYSTEMD_PID}" -eq "1" ]]; then
+    exec "${USHELL}" "$@"
+fi
+
+# start systemd if not started
+/usr/sbin/daemonize -l "${HOME}/.systemd.lock" /usr/bin/unshare -fp --mount-proc /lib/systemd/systemd --system-unit=basic.target 2>/dev/null
+# wait for systemd to start
+while [[ "${SYSTEMD_PID}" = "" ]]; do
+    sleep 0.05
+    SYSTEMD_PID=$(pgrep -xo systemd)
+done
+
+# enter systemd namespace
+exec /usr/bin/nsenter -t "${SYSTEMD_PID}" -m -p --wd="${PWD}" /sbin/runuser -s "${USHELL}" "${UNAME}" -- "${@}"
+```
+
+`sudo editor /etc/passwd`
+
+Replace the line 
+
+```
+root:x:0:0:root:/root:/bin/bash
+```
+
+with
+
+```
+root:x:0:0:root:/root:/usr/bin/bash
+```
+
+`sudo touch /etc/rc.local`
+
+`sudo chmod +x /etc/rc.local`
+
+`sudo editor /etc/rc.local`
+
+copy the folloing lines:
+
+```
+#!/bin/sh -e
+
+/etc/init.d/avahi-daemon start
+
+exit 0
+```
+
+
+In a elevated command prompt in Windows:
+
+```
+C:\ wsl --shutdown
+```
+
+```
+C:\ ubuntu1 config --default-user root
+```
