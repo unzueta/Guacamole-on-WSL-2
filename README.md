@@ -175,5 +175,5 @@ C:\ wsl --shutdown
 ```
 
 ```
-C:\ ubuntu1 config --default-user root
+C:\ ubuntu config --default-user root
 ```
